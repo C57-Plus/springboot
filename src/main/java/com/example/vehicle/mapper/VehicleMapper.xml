@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.vehicle.mapper.VehicleMapper">
+    <insert id="insert" parameterType="com.example.vehicle.entity.Vehicle">
+        insert into vehicle (id, plate, carrying_capacity, tare, status, owner, phone, remark, site_id, creator, created_time, modifier,
+                          modified_time)
+        values (#{id},
+                #{plate},
+                #{carryingCapacity},
+                #{tare},
+                #{status},
+                #{owner},
+                #{phone},
+                #{remark},
+                #{site_id},
+                #{creator},
+                now(),
+                #{modifier},
+                now())
+    </insert>
+
+    <update id="updateVehicle">
+        update vehicle
+        <set>
+            <if test="plate != null and plate != ''">
+                name = #{plate},
+            </if>
+            <if test="carryingCapacity != null and carryingCapacity != ''">
+                carrying_capacity = #{carryingCapacity},
+            </if>
+            <if test="tare != null and tare != ''">
+                tare = #{tare},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="owner != null and owner != ''">
+                owner = #{owner},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="siteId != null and siteId != ''">
+                site_id = #{siteId},
+            </if>
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteVehicle">
+        update vehicle
+        <set>
+            deL_flag = '1',
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectVehicle" resultType="com.example.vehicle.vo.VehicleQueryVO">
+        select id, plate, carrying_capacity, tare, status, owner, phone, remark, site_id, creator, created_time
+        from vehicle
+        where del_flag = '0'
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="plate != null and plate != ''">
+            and plate = #{plate}
+        </if>
+        <if test="siteId != null and siteId != ''">
+            and site_id = #{siteId}
+        </if>
+    </select>
+
+    <select id="queryVehicles" resultType="com.example.vehicle.vo.VehicleQueryVO">
+        select id, plate, carrying_capacity, tare, status, owner, phone, remark, site_id, creator, created_time
+        from vehicle
+        where del_flag = '0'
+        <if test="plate != null and plate != ''">
+            and plate = #{plate}
+        </if>
+        <if test="siteId != null and siteId != ''">
+            and site_id = #{siteId}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="owner != null and owner != ''">
+            and owner = #{phone}
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone = #{phone}
+        </if>
+    </select>
+</mapper>

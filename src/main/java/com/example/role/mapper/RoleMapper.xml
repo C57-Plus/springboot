@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.role.mapper.RoleMapper">
+    <insert id="insert" parameterType="com.example.role.entity.Role">
+        insert into role (id, name, code, creator, created_time, modifier,
+                          modified_time)
+        values (#{id},
+                #{name},
+                #{code},
+                #{creator},
+                now(),
+                #{modifier},
+                now())
+    </insert>
+
+    <update id="updateRole">
+        update role
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteRole">
+        update role
+        <set>
+            deL_flag = '1',
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectRole" resultType="com.example.role.vo.RoleQueryVO">
+        select id,
+               name,
+               code,
+               creator,
+               created_time
+        from role
+        where del_flag = '0'
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+    </select>
+
+    <select id="queryRoles" resultType="com.example.role.vo.RoleQueryVO">
+        select id,
+        name,
+        code,
+        creator,
+        created_time
+        from role
+        where del_flag = '0'
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.site.mapper.SiteMapper">
+    <insert id="insert" parameterType="com.example.site.entity.Site">
+        insert into site (id, name, charge_person, phone, address, picture, creator, created_time, modifier,
+                          modified_time)
+        values (#{id},
+                #{name},
+                #{chargePerson},
+                #{phone},
+                #{address},
+                #{picture},
+                #{creator},
+                now(),
+                #{modifier},
+                now())
+    </insert>
+
+    <update id="updateSite">
+        update site
+        <set>
+            <if test="name != null and name != null">
+                name = #{name},
+            </if>
+            <if test="chargePerson != null and chargePerson != null">
+                charge_person = #{chargePerson},
+            </if>
+            <if test="phone != null and phone != null">
+                phone = #{phone},
+            </if>
+            <if test="address != null and address != null">
+                address = #{address},
+            </if>
+            <if test="picture != null and picture != null">
+                picture = #{picture},
+            </if>
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteSite">
+        update site
+        <set>
+            deL_flag = '1',
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectSite" resultType="com.example.site.vo.SiteQueryVO">
+        select id, name, charge_person, phone, address, picture, creator, created_time
+        from site
+        where del_flag = '0'
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+    </select>
+
+    <select id="querySites" resultType="com.example.site.vo.SiteQueryVO">
+        select id, name, charge_person, phone, address, picture, creator, created_time
+        from site
+        where del_flag = '0'
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+    </select>
+</mapper>
