@@ -2,8 +2,6 @@ package com.example.user.mapper;
 
 
 import com.example.user.entity.User;
-import com.example.user.entity.UserRoleRel;
-import com.example.user.entity.UserSiteRel;
 import com.example.user.vo.UserQueryVO;
 import org.apache.ibatis.annotations.Mapper;
 

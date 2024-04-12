@@ -21,9 +21,6 @@ public class UserSaveCommand {
     @ApiModelProperty("密码")
     private String password;
 
-    @ApiModelProperty("所属单位")
-    private String unit;
-
     @ApiModelProperty("性别")
     private String sex;
 
@@ -44,4 +41,10 @@ public class UserSaveCommand {
 
     @ApiModelProperty("状态（0：启用；1：禁用）")
     private String status;
+
+    @ApiModelProperty("所属单位")
+    private String unit;
+
+    @ApiModelProperty("地址")
+    private String address;
 }
