@@ -26,7 +26,6 @@ public class User extends Account {
      */
     private String siteId;
 
-
     /**
      * 状态（0：启用；1：禁用）
      */
@@ -63,6 +62,11 @@ public class User extends Account {
      * 所属单位
      */
     private String unit;
+
+    /**
+     * 地址
+     */
+    private String address;
 
     /**
      * 创建人
