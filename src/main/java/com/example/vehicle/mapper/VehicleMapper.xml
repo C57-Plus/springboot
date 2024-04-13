@@ -4,17 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.vehicle.mapper.VehicleMapper">
     <insert id="insert" parameterType="com.example.vehicle.entity.Vehicle">
-        insert into vehicle (id, plate, carrying_capacity, tare, status, owner, phone, remark, site_id, creator, created_time, modifier,
+        insert into vehicle (id, plate, carrying_capacity, tare, owner, phone, remark, site_id, creator, created_time, modifier,
                           modified_time)
         values (#{id},
                 #{plate},
                 #{carryingCapacity},
                 #{tare},
-                #{status},
                 #{owner},
                 #{phone},
                 #{remark},
-                #{site_id},
+                #{siteId},
                 #{creator},
                 now(),
                 #{modifier},
