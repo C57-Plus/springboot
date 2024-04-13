@@ -25,7 +25,7 @@
         update vehicle
         <set>
             <if test="plate != null and plate != ''">
-                name = #{plate},
+                plate = #{plate},
             </if>
             <if test="carryingCapacity != null and carryingCapacity != ''">
                 carrying_capacity = #{carryingCapacity},
@@ -58,7 +58,6 @@
         update vehicle
         <set>
             deL_flag = '1',
-            modifier = #{modifier},
             modified_time = now()
         </set>
         where id = #{id}
@@ -93,7 +92,7 @@
             and status = #{status}
         </if>
         <if test="owner != null and owner != ''">
-            and owner = #{phone}
+            and owner LIKE CONCAT('%',#{owner},'%')
         </if>
         <if test="phone != null and phone != ''">
             and phone = #{phone}

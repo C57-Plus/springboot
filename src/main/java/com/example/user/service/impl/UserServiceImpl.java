@@ -4,6 +4,7 @@ import com.example.common.Result;
 import com.example.role.service.RoleService;
 import com.example.user.vo.UserQueryCommand;
 import com.example.utils.MD5Utils;
+import com.example.utils.RandomNumberUtil;
 import org.apache.commons.lang3.StringUtils;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.business.entity.Account;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,18 +46,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(UserSaveCommand saveCommand){
-        // 数据校验
-        if (ObjectUtil.isEmpty(saveCommand.getUserName()) || ObjectUtil.isEmpty(saveCommand.getPassword())) {
-            throw new CustomException(ResultCodeEnum.PARAM_LOST_ERROR);
-        }
+//        // 数据校验
+//        if (ObjectUtil.isEmpty(saveCommand.getUserName()) || ObjectUtil.isEmpty(saveCommand.getPassword())) {
+//            throw new CustomException(ResultCodeEnum.PARAM_LOST_ERROR);
+//        }
+        if (StringUtils.isNotBlank(saveCommand.getUserName())){
+            Map<String, Object> cond = new HashMap<>(1);
+            cond.put("userName", saveCommand.getUserName());
+            UserQueryVO userQueryVO = userMapper.selectUser(cond);
 
-        Map<String, Object> cond = new HashMap<>(1);
-        cond.put("userName", saveCommand.getUserName());
-        UserQueryVO userQueryVO = userMapper.selectUser(cond);
-        if (ObjectUtil.isNotNull(userQueryVO)) {
-            throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
+            if (ObjectUtil.isNotNull(userQueryVO)) {
+                throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
+            }
+        }else {
+            saveCommand.setUserName(createUserName());
         }
-
         User user = new User();
         BeanUtils.copyProperties(saveCommand, user);
 
@@ -83,6 +88,7 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUser(user);
     }
 
+    @Override
     public void saveUser(UserSaveCommand saveCommand){
         if (StringUtils.isBlank(saveCommand.getId())){
             // 新增
@@ -91,6 +97,26 @@ public class UserServiceImpl implements UserService {
             // 修改
             updateUser(saveCommand);
         }
+    }
+
+    @Override
+    public String createUserName(){
+        Calendar calendar = Calendar.getInstance();
+        String year = String.valueOf(calendar.get(Calendar.YEAR)).substring(2);
+        String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        String base = year + month;
+
+        String userName = "";
+        int flag = 0;
+        while (flag == 0){
+            String num = RandomNumberUtil.getRandomString(3);
+            userName = base + num;
+            UserQueryVO userQueryVO = selectByUsername(userName);
+            if (userQueryVO == null){
+                flag = 1;
+            }
+        }
+        return userName;
     }
 
     /**
@@ -130,6 +156,7 @@ public class UserServiceImpl implements UserService {
         cond.put("roleCode", command.getRoleCode());
         cond.put("status", command.getStatus());
         cond.put("nickName", command.getNickName());
+        cond.put("unit", command.getUnit());
         return userMapper.selectUserBatch(cond);
     }
 

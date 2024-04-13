@@ -101,6 +101,12 @@
         <if test="userName != null and userName != ''">
             and user_name = #{userName}
         </if>
+        <if test="nickName != null and nickName != ''">
+            and nick_name LIKE CONCAT('%',#{nickName},'%')
+        </if>
+        <if test="unit != null and unit != ''">
+            and unit LIKE CONCAT('%',#{unit},'%')
+        </if>
         <if test="phone != null and phone != ''">
             and phone = #{phone}
         </if>

@@ -29,18 +29,11 @@ public class UserController {
         return Result.success();
     }
 
-    /**
-     * 新增
-     */
-    @PostMapping("/add")
-    public Result add(@RequestBody UserSaveCommand command) {
-        // 数据校验
-        if (ObjectUtil.isEmpty(command.getUserName()) || ObjectUtil.isEmpty(command.getPassword())) {
-            return Result.error(ResultCodeEnum.PARAM_LOST_ERROR);
-        }
-        userService.add(command);
-        return Result.success();
-    }
+    @GetMapping("/createUserName")
+     public Result createUserName(){
+        String userName = userService.createUserName();
+         return Result.success(userName);
+     }
 
     /**
      * 删除

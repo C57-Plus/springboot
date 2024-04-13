@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.WarehouseMapper">
+    <insert id="insert" parameterType="com.example.warehouse.entity.Warehouse">
+        insert into warehouse (id, name, site_id, capacity, current_capacity, charge_person, phone, address, remark, status, creator, created_time, modifier,
+                          modified_time)
+        values (#{id},
+                #{name},
+                #{siteId},
+                #{capacity},
+                #{currentCapacity},
+                #{chargePerson},
+                #{phone},
+                #{address},
+                #{remark},
+                #{status},
+                #{creator},
+                now(),
+                #{modifier},
+                now())
+    </insert>
+
+    <update id="update">
+        update warehouse
+        <set>
+            <if test="name != null and name != null">
+                name = #{name},
+            </if>
+            <if test="siteId != null and siteId != null">
+                site_id = #{siteId},
+            </if>
+            <if test="capacity != null and capacity != null">
+                capacity = #{capacity},
+            </if>
+            <if test="currentCapacity != null and currentCapacity != null">
+                current_capacity = #{currentCapacity},
+            </if>
+            <if test="chargePerson != null and chargePerson != null">
+                charge_person = #{chargePerson},
+            </if>
+            <if test="phone != null and phone != null">
+                phone = #{phone},
+            </if>
+            <if test="address != null and address != null">
+                address = #{address},
+            </if>
+            <if test="remark != null and remark != null">
+                remark = #{remark},
+            </if>
+            <if test="status != null and status != null">
+                status = #{status},
+            </if>
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update warehouse
+        <set>
+            deL_flag = '1',
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectWarehouse" resultType="com.example.warehouse.vo.WarehouseQueryVO">
+        select id, name, site_id, capacity, current_capacity, charge_person, phone, address, remark, status, creator, created_time
+        from warehouse
+        where del_flag = '0'
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            and name LIKE CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
+    <select id="queryWarehouses" resultType="com.example.warehouse.vo.WarehouseQueryVO">
+        select id, name, site_id, capacity, current_capacity, charge_person, phone, address, remark, status, creator, created_time
+        from warehouse
+        where del_flag = '0'
+        <if test="name != null and name != ''">
+            and name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="siteId != null and siteId != ''">
+            and site_id = #{siteId}
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone = #{phone}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="address != null and address != ''">
+            and address LIKE CONCAT('%',#{address},'%')
+        </if>
+        <if test="chargePerson != null and chargePerson != ''">
+            and charge_person LIKE CONCAT('%',#{chargePerson},'%')
+        </if>
+    </select>
+</mapper>

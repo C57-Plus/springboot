@@ -1,0 +1,51 @@
+CREATE TABLE `freight` (
+	`id` VARCHAR ( 32 ) NOT NULL COMMENT '主键',
+	`name` VARCHAR ( 255 ) NOT NULL COMMENT '货物名',
+	`site_id` VARCHAR ( 32 ) NULL COMMENT '站点ID',
+	`status` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '状态（0：启用；1：禁用）',
+	`type` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '类型（0：入场；1：出场）',
+	`remark` VARCHAR ( 255 ) NULL COMMENT '备注',
+	`del_flag` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '删除标识（0：未删除，1：已删除）',
+	`creator` VARCHAR ( 32 ) NOT NULL COMMENT '创建人',
+	`created_time` datetime NOT NULL COMMENT '创建时间',
+	`modifier` VARCHAR ( 32 ) NOT NULL COMMENT '修改人',
+	`modified_time` datetime NOT NULL COMMENT '修改时间',
+PRIMARY KEY ( id )
+) ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '货物表';
+
+CREATE TABLE `warehouse` (
+	`id` VARCHAR ( 32 ) NOT NULL COMMENT '主键',
+	`name` VARCHAR ( 255 ) NOT NULL COMMENT '仓库名',
+	`site_id` VARCHAR ( 32 ) NULL COMMENT '站点ID',
+	`capacity` VARCHAR ( 10 ) NULL COMMENT '总容量',
+	`current_capacity` VARCHAR ( 10 ) NULL COMMENT '当前储量',
+	`charge_person` VARCHAR ( 20 ) NULL COMMENT '负责人',
+	`phone` VARCHAR ( 20 ) NULL COMMENT '联系方式',
+	`address` VARCHAR ( 255 ) NULL COMMENT '地址',
+	`remark` VARCHAR ( 255 ) NULL COMMENT '备注',
+	`status` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '状态（0：启用；1：禁用）',
+	`del_flag` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '删除标识（0：未删除，1：已删除）',
+	`creator` VARCHAR ( 32 ) NOT NULL COMMENT '创建人',
+	`created_time` datetime NOT NULL COMMENT '创建时间',
+	`modifier` VARCHAR ( 32 ) NOT NULL COMMENT '修改人',
+	`modified_time` datetime NOT NULL COMMENT '修改时间',
+PRIMARY KEY ( id )
+) ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '仓库表';
+
+CREATE TABLE `vehicle` (
+	`id` VARCHAR ( 32 ) NOT NULL COMMENT '主键',
+	`plate` VARCHAR ( 10 ) NOT NULL COMMENT '车牌号',
+	`site_id` VARCHAR ( 32 ) NULL COMMENT '站点ID',
+	`carryingCapacity` VARCHAR ( 10 ) NULL COMMENT '载重',
+	`tare` VARCHAR ( 10 ) NULL COMMENT '自重',
+	`owner` VARCHAR ( 20 ) NULL COMMENT '车主',
+	`phone` VARCHAR ( 20 ) NULL COMMENT '联系方式',
+	`remark` VARCHAR ( 255 ) NULL COMMENT '备注',
+	`status` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '状态（0：启用；1：禁用）',
+	`del_flag` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '删除标识（0：未删除，1：已删除）',
+	`creator` VARCHAR ( 32 ) NOT NULL COMMENT '创建人',
+	`created_time` datetime NOT NULL COMMENT '创建时间',
+	`modifier` VARCHAR ( 32 ) NOT NULL COMMENT '修改人',
+	`modified_time` datetime NOT NULL COMMENT '修改时间',
+PRIMARY KEY ( id )
+) ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '车辆表';
