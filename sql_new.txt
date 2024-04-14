@@ -49,3 +49,48 @@ CREATE TABLE `vehicle` (
 	`modified_time` datetime NOT NULL COMMENT '修改时间',
 PRIMARY KEY ( id )
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '车辆表';
+
+CREATE TABLE `task` (
+	`id` VARCHAR ( 32 ) NOT NULL COMMENT '主键',
+	`type` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '类型（0：入场；1：出场）',
+	`status` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '状态（0：待审核；1：待配送；2：配送中；3：待确认；4：已完成）',
+	`site_id` VARCHAR ( 32 ) NOT NULL COMMENT '站点ID',
+	`remark` VARCHAR ( 255 ) NULL COMMENT '备注',
+	`user_id` VARCHAR ( 32 ) NOT NULL COMMENT '关联用户Id（入场；供应商；出场：客户）',
+	`freight_id` VARCHAR ( 32 ) NOT NULL COMMENT '货物ID',
+	`weight` VARCHAR ( 10 ) NOT NULL COMMENT '货物重量',
+	`inspection_method` CHAR ( 1 ) NOT NULL DEFAULT '1' COMMENT '质检方式（0：无需质检；1：要质检）',
+	`check_flag` CHAR ( 1 ) NOT NULL DEFAULT '1' COMMENT '过磅审核（0：否；1：是）',
+	`del_flag` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '删除标识（0：未删除，1：已删除）',
+	`creator` VARCHAR ( 32 ) NOT NULL COMMENT '创建人',
+	`created_time` datetime NOT NULL COMMENT '创建时间',
+	`modifier` VARCHAR ( 32 ) NOT NULL COMMENT '修改人',
+	`modified_time` datetime NOT NULL COMMENT '修改时间',
+    PRIMARY KEY ( id )
+) ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '任务单表';
+
+CREATE TABLE `delivery` (
+	`id` VARCHAR ( 32 ) NOT NULL COMMENT '主键',
+	`type` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '类型（0：入场；1：出场）',
+	`status` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '状态（0：待审核；1：待配送；2：配送中；3：待确认；4：已完成）',
+	`site_id` VARCHAR ( 32 ) NOT NULL COMMENT '站点ID',
+	`remark` VARCHAR ( 255 ) NULL COMMENT '备注',
+	`task_id` VARCHAR ( 32 ) NOT NULL COMMENT '任务单ID',
+	`driver_id` VARCHAR ( 32 ) NOT NULL COMMENT '司机ID',
+	`plate` VARCHAR ( 10 ) NOT NULL COMMENT '车牌号',
+	`freight_id` VARCHAR ( 32 ) NOT NULL COMMENT '货物ID',
+	`planned_weight` VARCHAR ( 10 ) NOT NULL COMMENT '计划量',
+	`gross_weight` VARCHAR ( 10 ) NULL COMMENT '毛重',
+	`tare` VARCHAR ( 10 ) NULL COMMENT '皮重',
+	`deduct` VARCHAR ( 10 ) NULL COMMENT '扣除',
+	`net_weight`  VARCHAR ( 10 ) NULL COMMENT '净重（毛重-皮重-扣除）',
+	`weighting_time`datetime NULL COMMENT '称重时间',
+	`embark_warehouse_id` VARCHAR ( 32 ) NOT NULL COMMENT '装载仓库ID',
+	`unload_warehouse_id` VARCHAR ( 32 ) NOT NULL COMMENT '卸货仓库ID',
+	`del_flag` CHAR ( 1 ) NOT NULL DEFAULT '0' COMMENT '删除标识（0：未删除，1：已删除）',
+	`creator` VARCHAR ( 32 ) NOT NULL COMMENT '创建人',
+	`created_time` datetime NOT NULL COMMENT '创建时间',
+	`modifier` VARCHAR ( 32 ) NOT NULL COMMENT '修改人',
+	`modified_time` datetime NOT NULL COMMENT '修改时间',
+    PRIMARY KEY ( id )
+) ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '配送单表';

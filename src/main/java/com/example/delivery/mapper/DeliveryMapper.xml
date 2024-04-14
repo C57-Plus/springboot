@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.delivery.mapper.DeliveryMapper">
+    <resultMap id="deliveryResult" type="com.example.delivery.vo.DeliveryQueryVO">
+        <result property="id" column="id"></result>
+        <result property="taskId" column="taskId"></result>
+        <result property="type" column="type"></result>
+        <result property="status" column="status"></result>
+        <result property="siteId" column="siteId"></result>
+        <result property="remark" column="remark"></result>
+        <result property="plate" column="plate"></result>
+        <result property="plannedWeight" column="plannedWeight"></result>
+        <result property="grossWeight" column="grossWeight"></result>
+        <result property="tare" column="tare"></result>
+        <result property="deduct" column="deduct"></result>
+        <result property="netWeight" column="netWeight"></result>
+        <result property="weightingTime" column="weightingTime"></result>
+        <result property="creator" column="creator"></result>
+        <result property="createdTime" column="createdTime"></result>
+        <result property="modifier" column="modifier"></result>
+        <result property="modifiedTime" column="modifiedTime"></result>
+        <collection property="driverInfo" ofType="com.example.user.vo.UserQueryVO">
+            <result property="id" column="userId"></result>
+            <result property="nickName" column="nickName"></result>
+            <result property="phone" column="userPhone"></result>
+        </collection>
+        <collection property="freightInfo" ofType="com.example.freight.vo.FreightQueryVO">
+            <result property="id" column="freightId"></result>
+            <result property="name" column="freightName"></result>
+            <result property="remark" column="freightRemark"></result>
+        </collection>
+        <collection property="embarkWarehouseInfo" ofType="com.example.warehouse.vo.WarehouseQueryVO">
+            <result property="id" column="embarkWarehouseId"></result>
+            <result property="name" column="embarkWarehouseName"></result>
+            <result property="chargePerson" column="embarkChargePerson"></result>
+            <result property="phone" column="embarkPhone"></result>
+            <result property="address" column="embarkAddress"></result>
+        </collection>
+        <collection property="unloadWarehouseInfo" ofType="com.example.warehouse.vo.WarehouseQueryVO">
+            <result property="id" column="unloadWarehouseId"></result>
+            <result property="name" column="unloadWarehouseName"></result>
+            <result property="chargePerson" column="unloadChargePerson"></result>
+            <result property="phone" column="unloadPhone"></result>
+            <result property="address" column="unloadAddress"></result>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.task.entity.Task">
+        insert into delivery (id, task_id, type, site_id, remark, driver_id, plate, freight_id, planned_weight, embark_warehouse_id, unload_warehouse_id, creator,
+                              created_time, modifier,
+                              modified_time)
+        values (#{id},
+                #{taskId},
+                #{type},
+                #{siteId},
+                #{remark},
+                #{driverId},
+                #{plate},
+                #{freightId},
+                #{plannedWeight},
+                #{embarkWarehouseId},
+                #{unloadWarehouseId},
+                #{creator},
+                now(),
+                #{creator},
+                now())
+    </insert>
+
+    <update id="update">
+        update delivery
+        <set>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="driverId != null and driverId != ''">
+                driver_id = #{driverId},
+            </if>
+            <if test="plate != null and plate != ''">
+                plate = #{plate},
+            </if>
+            <if test="plannedWeight != null and plannedWeight != ''">
+                planned_weight = #{plannedWeight},
+            </if>
+            <if test="grossWeight != null and grossWeight != ''">
+                gross_weight = #{grossWeight},
+            </if>
+            <if test="tare != null and tare != ''">
+                tare = #{tare},
+            </if>
+            <if test="deduct != null and deduct != ''">
+                deduct = #{deduct},
+            </if>
+            <if test="netWeight != null and netWeight != ''">
+                net_weight = #{netWeight},
+            </if>
+            <if test="weightingTime != null and weightingTime != ''">
+                weighting_time = #{weightingTime},
+            </if>
+            <if test="embarkWarehouseId != null and embarkWarehouseId != ''">
+                embark_warehouse_id = #{embarkWarehouseId},
+            </if>
+            <if test="unloadWarehouseId != null and unloadWarehouseId != ''">
+                unload_warehouse_id = #{unloadWarehouseId},
+            </if>
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update delivery
+        <set>
+            deL_flag = '1',
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectDelivery" resultMap="deliveryResult">
+        select d.id,
+        d.task_id,
+        d.type,
+               d.status,
+        d.site_id,
+        d.remark,
+        u.id as userId,
+        u.nick_name as nickName,
+        u.phone as userPhone,
+        d.plate,
+        f.id as freightId,
+        f.name as freightName,
+        d.planned_weight,
+        d.gross_weight,
+        d.tare,
+        d.deduct,
+        d.net_weight,
+        d.weighting_time,
+        w1.id as embarkWarehouseId,
+        w1.name as embarkWarehouseName,
+        w1.charge_person as embarkChargePerson,
+        w1.phone as embarkPhone,
+        w1.address as embarkAddress,
+        w2.id as unloadWarehouseId,
+        w2.name as unloadWarehouseName,
+        w2.charge_person as unloadChargePerson,
+        w2.phone as unloadPhone,
+        w2.address as unloadAddress,
+        d.creator,
+        d.created_time as createdTime
+        from delivery d
+        left join user u on u.id = d.driver_id
+        left join freight f on f.id = d.freight_id
+        left join warehouse w1 on w1.id = d.embark_warehouse_id
+        left join warehouse w2 on w2.id = d.unload_warehouse_id
+        where d.del_flag = '0'
+        <if test="id != null and id != ''">
+            and d.id = #{id}
+        </if>
+    </select>
+
+    <select id="queryDeliveries" resultMap="deliveryResult">
+        select d.id,
+        d.task_id,
+        d.type,
+        d.status,
+        d.site_id,
+        d.remark,
+        u.id as userId,
+        u.nick_name as nickName,
+        u.phone as userPhone,
+        d.plate,
+        f.id as freightId,
+        f.name as freightName,
+        d.planned_weight,
+        d.gross_weight,
+        d.tare,
+        d.deduct,
+        d.net_weight,
+        d.weighting_time,
+        w1.id as embarkWarehouseId,
+        w1.name as embarkWarehouseName,
+        w1.charge_person as embarkChargePerson,
+        w1.phone as embarkPhone,
+        w1.address as embarkAddress,
+        w2.id as unloadWarehouseId,
+        w2.name as unloadWarehouseName,
+        w2.charge_person as unloadChargePerson,
+        w2.phone as unloadPhone,
+        w2.address as unloadAddress,
+        d.creator,
+        d.created_time as createdTime
+        from delivery d
+        left join user u on u.id = d.driver_id
+        left join freight f on f.id = d.freight_id
+        left join warehouse w1 on w1.id = d.embark_warehouse_id
+        left join warehouse w2 on w2.id = d.unload_warehouse_id
+        where d.del_flag = '0'
+        <if test="siteId != null and siteId != ''">
+            and d.site_id = #{siteId}
+        </if>
+        <if test="status != null and status != ''">
+            and d.status = #{status}
+        </if>
+        <if test="type != null and type != ''">
+            and d.type = #{type}
+        </if>
+        <if test="driverId != null and driverId != ''">
+            and d.driver_id = #{driverId}
+        </if>
+        <if test="plate != null and plate != ''">
+            and d.plate = #{plate}
+        </if>
+        <if test="freightId != null and freightId != ''">
+            and d.freight_id = #{freightId}
+        </if>
+    </select>
+</mapper>

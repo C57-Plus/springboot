@@ -39,6 +39,11 @@ public class Warehouse {
     private String phone;
 
     /**
+     * 省市区
+     */
+    private String province;
+
+    /**
      * 地址
      */
     private String address;

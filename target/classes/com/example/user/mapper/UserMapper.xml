@@ -72,7 +72,25 @@
     </update>
 
     <select id="selectById" resultType="com.example.user.vo.UserQueryVO">
-        select * from user where id = #{id}
+        select id,
+               user_name,
+               role_code,
+               site_id,
+               nick_name,
+               password,
+               sex,
+               email,
+               phone,
+               avatar,
+               status,
+               unit,
+               address,
+               creator,
+               created_time,
+               modifier,
+               modified_time
+        from user
+        where del_flag = '0' and id = #{id}
     </select>
 
     <select id="selectUser" resultType="com.example.user.vo.UserQueryVO">

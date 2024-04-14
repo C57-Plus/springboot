@@ -69,9 +69,10 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public List<WarehouseQueryVO> queryWarehouses(WarehouseQueryCommand queryCommand) {
-        Map<String, Object> cond = new HashMap<>(6);
+        Map<String, Object> cond = new HashMap<>(7);
         cond.put("name", queryCommand.getName());
         cond.put("chargePerson", queryCommand.getChargePerson());
+        cond.put("province", queryCommand.getProvince());
         cond.put("address", queryCommand.getAddress());
         cond.put("phone", queryCommand.getPhone());
         cond.put("siteId", queryCommand.getSiteId());

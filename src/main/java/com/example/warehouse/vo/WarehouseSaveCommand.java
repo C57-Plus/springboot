@@ -28,6 +28,9 @@ public class WarehouseSaveCommand {
     @ApiModelProperty("联系方式")
     private String phone;
 
+    @ApiModelProperty("省市区")
+    private String province;
+
     @ApiModelProperty("地址")
     private String address;
 

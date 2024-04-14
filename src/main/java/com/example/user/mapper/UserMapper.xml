@@ -29,34 +29,34 @@
     <update id="updateUser">
         update user
         <set>
-            <if test="siteId != null">
+            <if test="siteId != null and site !=  ''">
                 site_id = #{siteId},
             </if>
-            <if test="nickName != null">
+            <if test="nickName != null and nickName !=  ''">
                 nick_name = #{nickName},
             </if>
-            <if test="password != null">
+            <if test="password != null and password !=  ''">
                 password = #{password},
             </if>
-            <if test="avatar != null">
+            <if test="avatar != null and avatar !=  ''">
                 avatar = #{avatar},
             </if>
-            <if test="sex != null">
+            <if test="sex != null and sex !=  ''">
                 sex = #{sex},
             </if>
-            <if test="phone != null">
+            <if test="phone != null and phone !=  ''">
                 phone = #{phone},
             </if>
-            <if test="email != null">
+            <if test="email != null and email !=  ''">
                 email = #{email},
             </if>
-            <if test="status != null">
+            <if test="status != null and status !=  ''">
                 status = #{status},
             </if>
-            <if test="unit != null">
+            <if test="unit != null and unit !=  ''">
                 unit = #{unit},
             </if>
-            <if test="address != null">
+            <if test="address != null and address !=  ''">
                 address = #{address},
             </if>
             modifier = #{modifier},
@@ -72,7 +72,25 @@
     </update>
 
     <select id="selectById" resultType="com.example.user.vo.UserQueryVO">
-        select * from user where id = #{id}
+        select id,
+               user_name,
+               role_code,
+               site_id,
+               nick_name,
+               password,
+               sex,
+               email,
+               phone,
+               avatar,
+               status,
+               unit,
+               address,
+               creator,
+               created_time,
+               modifier,
+               modified_time
+        from user
+        where del_flag = '0' and id = #{id}
     </select>
 
     <select id="selectUser" resultType="com.example.user.vo.UserQueryVO">

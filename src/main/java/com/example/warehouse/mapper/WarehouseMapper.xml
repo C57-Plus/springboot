@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.warehouse.mapper.WarehouseMapper">
     <insert id="insert" parameterType="com.example.warehouse.entity.Warehouse">
-        insert into warehouse (id, name, site_id, capacity, current_capacity, charge_person, phone, address, remark, status, creator, created_time, modifier,
+        insert into warehouse (id, name, site_id, capacity, current_capacity, charge_person, phone, province, address, remark, status, creator, created_time, modifier,
                           modified_time)
         values (#{id},
                 #{name},
@@ -13,6 +13,7 @@
                 #{currentCapacity},
                 #{chargePerson},
                 #{phone},
+                #{province},
                 #{address},
                 #{remark},
                 #{status},
@@ -25,31 +26,34 @@
     <update id="update">
         update warehouse
         <set>
-            <if test="name != null and name != null">
+            <if test="name != null and name != ''">
                 name = #{name},
             </if>
-            <if test="siteId != null and siteId != null">
+            <if test="siteId != null and siteId != ''">
                 site_id = #{siteId},
             </if>
-            <if test="capacity != null and capacity != null">
+            <if test="capacity != null and capacity != ''">
                 capacity = #{capacity},
             </if>
-            <if test="currentCapacity != null and currentCapacity != null">
+            <if test="currentCapacity != null and currentCapacity != ''">
                 current_capacity = #{currentCapacity},
             </if>
-            <if test="chargePerson != null and chargePerson != null">
+            <if test="chargePerson != null and chargePerson != ''">
                 charge_person = #{chargePerson},
             </if>
-            <if test="phone != null and phone != null">
+            <if test="phone != null and phone != ''">
                 phone = #{phone},
             </if>
-            <if test="address != null and address != null">
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+            <if test="address != null and address != ''">
                 address = #{address},
             </if>
-            <if test="remark != null and remark != null">
+            <if test="remark != null and remark != ''">
                 remark = #{remark},
             </if>
-            <if test="status != null and status != null">
+            <if test="status != null and status != ''">
                 status = #{status},
             </if>
             modifier = #{modifier},
@@ -69,7 +73,7 @@
     </update>
 
     <select id="selectWarehouse" resultType="com.example.warehouse.vo.WarehouseQueryVO">
-        select id, name, site_id, capacity, current_capacity, charge_person, phone, address, remark, status, creator, created_time
+        select id, name, site_id, capacity, current_capacity, charge_person, phone, province, address, remark, status, creator, created_time
         from warehouse
         where del_flag = '0'
         <if test="id != null and id != ''">
@@ -81,7 +85,7 @@
     </select>
 
     <select id="queryWarehouses" resultType="com.example.warehouse.vo.WarehouseQueryVO">
-        select id, name, site_id, capacity, current_capacity, charge_person, phone, address, remark, status, creator, created_time
+        select id, name, site_id, capacity, current_capacity, charge_person, phone,province, address, remark, status, creator, created_time
         from warehouse
         where del_flag = '0'
         <if test="name != null and name != ''">
@@ -95,6 +99,9 @@
         </if>
         <if test="status != null and status != ''">
             and status = #{status}
+        </if>
+        <if test="province != null and province != ''">
+            and province = #{province}
         </if>
         <if test="address != null and address != ''">
             and address LIKE CONCAT('%',#{address},'%')
