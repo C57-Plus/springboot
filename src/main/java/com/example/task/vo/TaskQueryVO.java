@@ -3,6 +3,7 @@ package com.example.task.vo;
 import com.example.freight.vo.FreightQueryVO;
 import com.example.site.vo.SiteQueryVO;
 import com.example.user.vo.UserQueryVO;
+import com.example.warehouse.vo.WarehouseQueryVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -37,6 +38,12 @@ public class TaskQueryVO {
 
     @ApiModelProperty("过磅审核（0：否；1：是）")
     private String checkFlag;
+
+    @ApiModelProperty("装载仓库信息")
+    private WarehouseQueryVO embarkWarehouseInfo;
+
+    @ApiModelProperty("卸货仓库信息")
+    private WarehouseQueryVO unloadWarehouseInfo;
 
     @ApiModelProperty("创建人")
     private String creator;

@@ -63,6 +63,10 @@ public class TaskServiceImpl implements TaskService {
         if (!this.checkRole(saveCommand)){
             throw new CustomException(ResultCodeEnum.ROLE_CODE_ERROR);
         }
+        if (StringUtils.isBlank(saveCommand.getUnloadWarehouseId())){
+            throw new CustomException(ResultCodeEnum.UNLOAD_NULL_ERROR);
+        }
+
         Task task = new Task();
         BeanUtils.copyProperties(saveCommand,task);
         task.setId(UUIDUtil.get32UUID());

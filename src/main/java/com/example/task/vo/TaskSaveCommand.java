@@ -38,4 +38,10 @@ public class TaskSaveCommand {
 
     @ApiModelProperty("过磅审核（0：否；1：是）")
     private String checkFlag = "1";
+
+    @ApiModelProperty("装载仓库ID")
+    private String embarkWarehouseId;
+
+    @ApiModelProperty("卸货仓库ID")
+    private String unloadWarehouseId;
 }

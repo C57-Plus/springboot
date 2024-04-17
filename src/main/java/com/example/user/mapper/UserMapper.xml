@@ -29,7 +29,7 @@
     <update id="updateUser">
         update user
         <set>
-            <if test="siteId != null and site !=  ''">
+            <if test="siteId != null and siteId !=  ''">
                 site_id = #{siteId},
             </if>
             <if test="nickName != null and nickName !=  ''">

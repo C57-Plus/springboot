@@ -68,13 +68,14 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public List<DeliveryQueryVO> queryDeliveries(DeliveryQueryCommand queryCommand) {
-        Map<String, Object> cond = new HashMap<>(6);
+        Map<String, Object> cond = new HashMap<>(7);
         cond.put("type", queryCommand.getType());
         cond.put("status", queryCommand.getStatus());
         cond.put("siteId", queryCommand.getSiteId());
         cond.put("driverId", queryCommand.getDriverId());
         cond.put("plate", queryCommand.getPlate());
         cond.put("freightId", queryCommand.getFreightId());
+        cond.put("taskId", queryCommand.getTaskId());
         return deliveryMapper.queryDeliveries(cond);
     }
 }

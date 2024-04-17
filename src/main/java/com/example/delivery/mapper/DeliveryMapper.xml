@@ -220,5 +220,8 @@
         <if test="freightId != null and freightId != ''">
             and d.freight_id = #{freightId}
         </if>
+        <if test="taskId != null and taskId != ''">
+            and d.task_id = #{taskId}
+        </if>
     </select>
 </mapper>

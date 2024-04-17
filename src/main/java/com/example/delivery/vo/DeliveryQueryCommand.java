@@ -13,6 +13,9 @@ public class DeliveryQueryCommand {
     @ApiModelProperty("类型（0：入场；1：出场）")
     private String type;
 
+    @ApiModelProperty("任务单ID")
+    private String taskId;
+
     @ApiModelProperty("状态（0：待审核；1：待配送；2：配送中；3：待确认；4：已完成）")
     private String status;
 

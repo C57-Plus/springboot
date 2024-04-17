@@ -54,6 +54,16 @@ public class Task {
      */
     private String checkFlag;
 
+    /**
+     * 装载仓库ID
+     */
+    private String embarkWarehouseId;
+
+    /**
+     * 卸货仓库ID
+     */
+    private String unloadWarehouseId;
+
     private String creator;
 
     private String modifier;

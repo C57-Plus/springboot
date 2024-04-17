@@ -15,6 +15,8 @@ public interface TaskMapper {
 
     int delete(Map<String, Object> cond);
 
+    Task selectById(String id);
+
     TaskQueryVO selectTask(Map<String, Object> cond);
 
     List<TaskQueryVO> queryTasks(Map<String, Object> cond);
