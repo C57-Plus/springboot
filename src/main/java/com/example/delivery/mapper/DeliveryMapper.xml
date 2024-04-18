@@ -224,4 +224,13 @@
             and d.task_id = #{taskId}
         </if>
     </select>
+    <select id="selectById" resultType="com.example.delivery.entity.Delivery">
+        select * from delivery where del_flag = '0' and id = #{id}
+    </select>
+    <select id="selectDeliveryBatch" resultType="com.example.delivery.entity.Delivery">
+        select * from delivery where del_flag = '0'
+        <if test="taskId != null and taskId != ''">
+            and task_id = #{taskId}
+        </if>
+    </select>
 </mapper>

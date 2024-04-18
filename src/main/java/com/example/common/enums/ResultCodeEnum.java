@@ -16,8 +16,11 @@ public enum ResultCodeEnum {
     USER_NOT_EXIST_ERROR("5004", "用户不存在"),
     PARAM_PASSWORD_ERROR("5005", "原密码输入错误"),
     NO_AUTH("5006", "无权限"),
-    NO_GOODS("5006", "您未选购商品"),
     AUDIT_ERROR("5007", "审核失败"),
+    NO_NEED_DELIVERY_ERROR("5008", "无需配送单"),
+    DELIVERY_NOT_EXIST("5009", "配送单不存在"),
+    TASK_NOT_EXIST("5009", "任务单不存在"),
+    DELIVER_ERROR("5010", "开始配送错误")
     ;
 
     public String code;

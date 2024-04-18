@@ -18,4 +18,6 @@ public interface TaskService {
     TaskQueryVO selectTask(String id);
 
     List<TaskQueryVO> queryTask(TaskQueryCommand queryCommand);
+
+    void startDeliver(String taskId);
 }

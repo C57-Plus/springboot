@@ -2,6 +2,7 @@ package com.example.task.service.impl;
 
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
+import com.example.delivery.entity.Delivery;
 import com.example.exception.CustomException;
 import com.example.task.entity.Task;
 import com.example.task.mapper.TaskMapper;
@@ -9,7 +10,6 @@ import com.example.task.service.TaskService;
 import com.example.task.vo.TaskQueryCommand;
 import com.example.task.vo.TaskQueryVO;
 import com.example.task.vo.TaskSaveCommand;
-import com.example.user.mapper.UserMapper;
 import com.example.user.service.UserService;
 import com.example.user.vo.UserQueryVO;
 import com.example.utils.TokenUtils;
@@ -93,8 +93,34 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.delete(cond);
     }
 
-    public void auditTask(){
+    private void updateStatus(String id, String status){
+        Task task = new Task();
+        task.setStatus(status);
+        task.setId(id);
+        task.setModifier(TokenUtils.getUserID());
+        taskMapper.update(task);
+    }
 
+    public void auditTask(String taskId){
+        Task task = taskMapper.selectById(taskId);
+        if (!Objects.equals(task.getStatus(), "0")
+                || StringUtils.isBlank(task.getEmbarkWarehouseId())
+                || StringUtils.isBlank(task.getUnloadWarehouseId())){
+            throw new CustomException(ResultCodeEnum.AUDIT_ERROR);
+        }
+        this.updateStatus(taskId, "1");
+    }
+
+    @Override
+    public void startDeliver(String taskId){
+        Task task = taskMapper.selectById(taskId);
+        if (Objects.equals(task.getStatus(), "2")){
+            return;
+        }
+        if (!Objects.equals(task.getStatus(), "1")){
+            throw new CustomException(ResultCodeEnum.DELIVER_ERROR);
+        }
+        this.updateStatus(taskId, "2");
     }
 
     @Override

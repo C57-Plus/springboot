@@ -19,5 +19,9 @@ public interface DeliveryMapper {
 
     DeliveryQueryVO selectDelivery(Map<String, Object> cond);
 
+    Delivery selectById(String id);
+
     List<DeliveryQueryVO> queryDeliveries(Map<String, Object> cond);
+
+    List<Delivery> selectDeliveryBatch(Map<String, Object> cond);
 }
