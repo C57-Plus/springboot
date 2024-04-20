@@ -21,19 +21,19 @@
     <update id="updateSite">
         update site
         <set>
-            <if test="name != null and name != null">
+            <if test="name != null and name != ''">
                 name = #{name},
             </if>
-            <if test="chargePerson != null and chargePerson != null">
+            <if test="chargePerson != null and chargePerson != ''">
                 charge_person = #{chargePerson},
             </if>
-            <if test="phone != null and phone != null">
+            <if test="phone != null and phone != ''">
                 phone = #{phone},
             </if>
-            <if test="address != null and address != null">
+            <if test="address != null and address != ''">
                 address = #{address},
             </if>
-            <if test="picture != null and picture != null">
+            <if test="picture != null and picture != ''">
                 picture = #{picture},
             </if>
             modifier = #{modifier},

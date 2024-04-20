@@ -7,7 +7,8 @@ public enum ResultCodeEnum {
     TOKEN_INVALID_ERROR("401", "无效的token"),
     TOKEN_CHECK_ERROR("401", "token验证失败，请重新登录"),
     PARAM_LOST_ERROR("4001", "参数缺失"),
-
+    ROLE_CODE_ERROR("4002", "角色错误"),
+    UNLOAD_NULL_ERROR("4003", "卸货仓库不能为空"),
     SYSTEM_ERROR("500", "系统异常"),
     USER_EXIST_ERROR("5001", "用户名已存在"),
     USER_NOT_LOGIN("5002", "用户未登录"),
@@ -15,7 +16,11 @@ public enum ResultCodeEnum {
     USER_NOT_EXIST_ERROR("5004", "用户不存在"),
     PARAM_PASSWORD_ERROR("5005", "原密码输入错误"),
     NO_AUTH("5006", "无权限"),
-    NO_GOODS("5006", "您未选购商品"),
+    AUDIT_ERROR("5007", "审核失败"),
+    NO_NEED_DELIVERY_ERROR("5008", "无需配送单"),
+    DELIVERY_NOT_EXIST("5009", "配送单不存在"),
+    TASK_NOT_EXIST("5009", "任务单不存在"),
+    DELIVER_ERROR("5010", "开始配送错误")
     ;
 
     public String code;

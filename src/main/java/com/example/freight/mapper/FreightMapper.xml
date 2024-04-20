@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.freight.mapper.FreightMapper">
+    <insert id="insert" parameterType="com.example.vehicle.entity.Vehicle">
+        insert into freight (id, name, site_id, status, type, remark, creator, created_time, modifier,
+                          modified_time)
+        values (#{id},
+                #{name},
+                #{siteId},
+                #{status},
+                #{type},
+                #{remark},
+                #{creator},
+                now(),
+                #{modifier},
+                now())
+    </insert>
+
+    <update id="updateFreight">
+        update freight
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="siteId != null and siteId != ''">
+                site_id = #{siteId},
+            </if>
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteFreight">
+        update freight
+        <set>
+            deL_flag = '1',
+            modifier = #{modifier},
+            modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectFreight" resultType="com.example.freight.vo.FreightQueryVO">
+        select id, name, site_id, status, type, remark, creator, created_time
+        from freight
+        where del_flag = '0'
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            and name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="siteId != null and siteId != ''">
+            and site_id = #{siteId}
+        </if>
+    </select>
+
+    <select id="queryFreights" resultType="com.example.freight.vo.FreightQueryVO">
+        select id, name, site_id, status, type, remark, creator, created_time
+        from freight
+        where del_flag = '0'
+        <if test="name != null and name != ''">
+            and name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="siteId != null and siteId != ''">
+            and site_id = #{siteId}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="type != null and type != ''">
+            and type = #{type}
+        </if>
+    </select>
+</mapper>

@@ -15,24 +15,19 @@ public class Freight {
     private String name;
 
     /**
-     * 登记重量
+     * 站点ID
      */
-    private String weight;
+    private String siteId;
 
     /**
-     * 入场任务单号
+     * 状态（0：启用；1：禁用）
      */
-    private String taskId;
+    private String status;
 
     /**
-     * 供应商ID
+     * 类型（0:入场；1：出场）
      */
-    private String vendorId;
-
-    /**
-     * 地址
-     */
-    private String address;
+    private String type;
 
     /**
      * 备注
@@ -42,4 +37,24 @@ public class Freight {
     private String creator;
 
     private String modifier;
+
+//    /**
+//     * 登记重量
+//     */
+//    private String weight;
+//
+//    /**
+//     * 入场任务单号
+//     */
+//    private String taskId;
+//
+//    /**
+//     * 供应商ID
+//     */
+//    private String vendorId;
+//
+//    /**
+//     * 地址
+//     */
+//    private String address;
 }

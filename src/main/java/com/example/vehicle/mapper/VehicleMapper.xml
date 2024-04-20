@@ -4,17 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.vehicle.mapper.VehicleMapper">
     <insert id="insert" parameterType="com.example.vehicle.entity.Vehicle">
-        insert into vehicle (id, plate, carrying_capacity, tare, status, owner, phone, remark, site_id, creator, created_time, modifier,
+        insert into vehicle (id, plate, carrying_capacity, tare, owner, phone, remark, site_id, creator, created_time, modifier,
                           modified_time)
         values (#{id},
                 #{plate},
                 #{carryingCapacity},
                 #{tare},
-                #{status},
                 #{owner},
                 #{phone},
                 #{remark},
-                #{site_id},
+                #{siteId},
                 #{creator},
                 now(),
                 #{modifier},
@@ -25,7 +24,7 @@
         update vehicle
         <set>
             <if test="plate != null and plate != ''">
-                name = #{plate},
+                plate = #{plate},
             </if>
             <if test="carryingCapacity != null and carryingCapacity != ''">
                 carrying_capacity = #{carryingCapacity},
@@ -58,7 +57,6 @@
         update vehicle
         <set>
             deL_flag = '1',
-            modifier = #{modifier},
             modified_time = now()
         </set>
         where id = #{id}
@@ -93,7 +91,7 @@
             and status = #{status}
         </if>
         <if test="owner != null and owner != ''">
-            and owner = #{phone}
+            and owner LIKE CONCAT('%',#{owner},'%')
         </if>
         <if test="phone != null and phone != ''">
             and phone = #{phone}

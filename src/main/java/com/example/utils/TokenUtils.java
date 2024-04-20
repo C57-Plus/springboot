@@ -77,17 +77,17 @@ public class TokenUtils {
     }
 
     public static String getUserID(){
-        try {
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            String token = request.getHeader(Constants.TOKEN);
-            if (ObjectUtil.isNotEmpty(token)) {
-                String userRole = JWT.decode(token).getAudience().get(0);
-                return userRole.split("-")[0];
-            }
-        } catch (Exception e) {
-            log.error("获取当前用户信息出错", e);
-        }
-        return "";
+//        try {
+//            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//            String token = request.getHeader(Constants.TOKEN);
+//            if (ObjectUtil.isNotEmpty(token)) {
+//                String userRole = JWT.decode(token).getAudience().get(0);
+//                return userRole.split("-")[0];
+//            }
+//        } catch (Exception e) {
+//            log.error("获取当前用户信息出错", e);
+//        }
+        return "999999";
     }
 
     public static void main(String[] args) {

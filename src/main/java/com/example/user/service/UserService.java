@@ -16,6 +16,8 @@ public interface UserService {
 
     void saveUser(UserSaveCommand saveCommand);
 
+    String createUserName();
+
     void deleteById(String id);
 
     void deleteBatch(List<String> ids);
